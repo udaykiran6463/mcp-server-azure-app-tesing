@@ -60,12 +60,6 @@ jobs:
         with:
           name: python-app
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_45BF02FBD0F745FB8F73E20874C1DF27 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_ED753C77BB2547EBB1E5DEE24A90CD00 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6905D127D58044B6B7F40A77BE478D5E }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -73,4 +67,5 @@ jobs:
         with:
           app-name: 'mcp-fastapi-server'
           slot-name: 'Production'
+
           
