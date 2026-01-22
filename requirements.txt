@@ -3,3 +3,4 @@ python-dotenv
 msal
 fastapi
 unicorn
+fastmcp

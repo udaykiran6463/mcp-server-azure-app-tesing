@@ -1,30 +1,42 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastmcp import FastMCP
+mcp = FastMCP(
+    name="basic-caluclator",
+)
 
-app = FastAPI(title="MCP Calculator Server")
 
-class CalcRequest(BaseModel):
-    a: float
-    b: float
+@mcp.tool(
+        name="add",
+        description="add two numbers",
+        tags=["add", "math"],
+)
+def add(a, b):
+    return a + b
 
-@app.get("/")
-def root():
-    return {"status": "MCP Server is running"}
+@mcp.tool(
+        name="subtract",
+        description="subtract two numbers",
+        tags=["subtract", "math"],
+)
+def subtract(a, b):
+    return a - b   
 
-@app.post("/tools/add")
-def add(req: CalcRequest):
-    return {"result": req.a + req.b}
+@mcp.tool(
+        name="multiply",
+        description="multiply two numbers",
+        tags=["multiply", "math"],
+)
+def multiply(a, b):
+    return a * b
 
-@app.post("/tools/subtract")
-def subtract(req: CalcRequest):
-    return {"result": req.a - req.b}
+@mcp.tool(
+        name="divide",
+        description="divide two numbers",
+        tags=["divide", "math"],
+)
+def divide(a, b):
+    return a / b
 
-@app.post("/tools/multiply")
-def multiply(req: CalcRequest):
-    return {"result": req.a * req.b}
 
-@app.post("/tools/divide")
-def divide(req: CalcRequest):
-    if req.b == 0:
-        return {"error": "Division by zero"}
-    return {"result": req.a / req.b}
+
+if __name__ == "__main__":
+    mcp.run(transport="http",host="0.0.0.0", port=8000)
